@@ -1,0 +1,53 @@
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:400,300,700" />
+
+<textarea id="input">
+function factorial(n) {
+  n = n | 0;
+  if (n === 0) {
+    return n;
+  }
+  return n * factorial(n - 1);
+};
+for (let ii = 0; ii < 10; ++ii) {
+  factorial(ii);
+  // add some evilness
+  if (Math.random() < 0.4) eval();
+};
+</textarea>
+<canvas id="canvas"></canvas>
+
+<script type="text/javascript" src="iroh-browser.js"></script>
+<script type="text/javascript" src="functions.js"></script>
+<script type="text/javascript" src="entity.js"></script>
+<script type="text/javascript" src="block.js"></script>
+<script type="text/javascript" src="player.js"></script>
+<script type="text/javascript" src="particle.js"></script>
+<script type="text/javascript" src="draw.js"></script>
+<script type="text/javascript" src="update.js"></script>
+<script type="text/javascript" src="runtime.js"></script>
+<script type="text/javascript" src="input.js"></script>
+<script type="text/javascript" src="init.js"></script>
+
+<style>
+  body {
+    overflow: hidden;
+    margin: 0;
+    background: #e1c3c3;
+  }
+  #input {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: rgba(0,0,0,0);
+    color: #fff;
+    width: 256px;
+    height: calc(100% - 10px);
+    border: 1px solid rgba(255,255,255,0.25);
+    padding: 5px;
+  }
+  #input:focus {
+    background: rgba(0,0,0,0.25);
+    outline: none !important;
+    transition: background 0.1s;
+  }
+</style>
