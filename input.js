@@ -27,6 +27,6 @@ setInterval(function() {
   }
 }, 1e3 / 30);
 
-input.onkeydown = function(e) {
+input.oninput = function(e) {
   setTimeout(function() { reset(); });
 };
