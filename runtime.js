@@ -35,7 +35,7 @@ setInterval(function() {
     );
     if (task.call === eval) {
       block.satan = true;
-      block.y -= block.height * 3;
+      block.y -= block.height * 4;
     }
     addBlock(block);
   }
