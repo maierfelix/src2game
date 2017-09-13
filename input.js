@@ -21,7 +21,7 @@ setInterval(function() {
   if (keys["s"] || keys["ArrowDown"]) {
     //if (!isBlockedAt(player.x, player.y + velo)) player.y += velo;
   }
-  if (keys[" "] && player.canJump) {
+  if ((keys[" "] || keys["ArrowUp"] || keys["w"]) && player.canJump) {
     player.vy = -5;
     player.canJump = false;
   }

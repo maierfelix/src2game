@@ -71,7 +71,6 @@ function reset() {
   if (activeSatanMode()) {
     getGradientColor = getRainbowColor;
     document.body.style.background = BG_COLOR;
-    highscore = 0;
   }
   // keep old player shadows
   players.map(player => {

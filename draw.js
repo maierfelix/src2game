@@ -32,7 +32,7 @@ function drawStats() {
 
 function drawScore() {
   let fSize = 22;
-  let str = `Score: ${player.score}`;
+  let str = `Score: ${activeSatanMode() ? "666" : player.score}`;
   ctx.font = `${fSize}px Consolas`;
   ctx.fillStyle = "#fff";
   ctx.shadowColor = "rgb(128, 128, 128)";
@@ -44,7 +44,7 @@ function drawScore() {
 
 function drawHighscore() {
   let fSize = 22;
-  let str = `Highscore: ${highscore}`;
+  let str = `Highscore: ${activeSatanMode() ? "6".repeat(width) : highscore}`;
   ctx.font = `${fSize}px Consolas`;
   ctx.fillStyle = "#fff";
   ctx.shadowColor = "rgb(128, 128, 128)";

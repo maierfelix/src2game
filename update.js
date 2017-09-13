@@ -100,8 +100,6 @@ function isBlockedAt(x, y, entity) {
       }
       if (entity === player) {
         if (block.satan) {
-          player.score = 666;
-          highscore = "6".repeat(width);
           //player.kill();
           getGradientColor = getSatanColor;
           document.body.style.background = `rgb(20,0,0)`;
