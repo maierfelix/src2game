@@ -10,9 +10,9 @@ function factorial(n) {
   }
   return n * factorial(n - 1);
 };
-for (let ii = 0; ii < 10; ++ii) {
-  factorial(ii);
-  // add some evilness
+for (let ii = 0; ii < 5; ++ii) {
+  factorial(ii * 2);
+  // add some evilness (red blocks)
   if (Math.random() < 0.15) eval();
 };
 </textarea>
