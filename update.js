@@ -52,7 +52,8 @@ function updateParticles() {
     let pt = particles[ii];
     pt.x += pt.vx;
     pt.y += pt.vy;
-    pt.opacity -= 0.05;
+    if (pt.lava) pt.opacity -= 0.01;
+    else pt.opacity -= 0.05;
     if (pt.opacity < 0) {
       particles.splice(ii, 1);
     }
@@ -142,3 +143,15 @@ function isBlockedAt(x, y, entity) {
   };
   return false;
 };
+
+// lava particles
+setInterval(function() {
+  let px = -cx + (Math.random() * width) | 0;
+  let py = -cy + (cy + maxBlockY) + 8 + Math.random() * 4;
+  let pt = new Particle(px, py, 8, 8, "red");
+  pt.vx = 0;
+  pt.vy = -Math.random();
+  pt.opacity = 0.5;
+  pt.lava = true;
+  particles.push(pt);
+}, 1e3 / 10);
