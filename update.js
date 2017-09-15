@@ -13,16 +13,16 @@ function update() {
 function updateDeathLines() {
   // horizontal
   dcx += dcvx;
-  dcvx += 0.00125;
+  dcvx += 0.00135;
   // max velo =^ 2.0
-  dcvx = Math.min(dcvx, 2.0);
+  dcvx = Math.min(dcvx, 2.1);
 };
 
 function updateDeadEntities() {
   for (let ii = 0; ii < entities.length; ++ii) {
     let entity = entities[ii];
     if (entity.dead) continue;
-    if (entity.x + (entity.width / 2) <= dcx) {
+    if (entity.x + (entity.width / 2) <= dcx && entity !== player) {
       entity.opacity *= 0.0975;
     }
   };
@@ -37,6 +37,9 @@ function updateCamera() {
 function updateBlocks() {
   for (let ii = 0; ii < blocks.length; ++ii) {
     let block = blocks[ii];
+    if (block.x + (block.width / 2) <= dcx) {
+      block.broken = true;
+    }
     if (block.broken) {
       block.opacity *= 0.0125;
       if (block.opacity <= 0.1 && block.broken) blocks.splice(ii, 1);
@@ -70,12 +73,25 @@ function updatePlayers() {
     entity.vx = entity.vx * 0.75;
     if (player === entity) {
       if (
-        player.y + (player.height / 2) > maxBlockY ||
-        entity.x + (entity.width / 2) <= dcx
+        player.y + (player.height / 2) > maxBlockY
+        //entity.x + (entity.width / 2) <= dcx
       ) {
-        if (!player.dead) {
+        if (!player.dead && !player.won) {
           player.kill();
         }
+      }
+      else if (
+        wBlockIndex > 1 &&
+        (ex < player.x + player.width) &&
+        (ex + 32 > player.x) &&
+        (ey < player.y + player.height) &&
+        (ey + 128 > player.y)
+      ) {
+        player.won = true;
+        player.dead = true;
+        setTimeout(function() {
+          reset();
+        }, 2e3);
       }
     }
   };

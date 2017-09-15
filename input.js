@@ -7,7 +7,7 @@ window.addEventListener("keyup", function(e) {
   keys[e.key] = 0;
 });
 setInterval(function() {
-  if (player.dead) return;
+  if (player.won || player.dead) return;
   let velo = 2;
   if (keys["a"] || keys["ArrowLeft"]) {
     if (!isBlockedAt(-velo, 0, player)) player.vx -= velo;

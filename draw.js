@@ -74,6 +74,22 @@ function drawDeathScreen() {
   ctx.shadowOffsetX = ctx.shadowOffsetY = 0;
 };
 
+function drawWinScreen() {
+  ctx.fillStyle = `rgba(0,0,0,0.5)`;
+  ctx.fillRect(0, 0, width, height);
+  let fSize = 90;
+  let stra = "You win";
+  let strb = "Score: " + player.score;
+  ctx.font = `${fSize}px Consolas`;
+  ctx.fillStyle = "#fff";
+  ctx.shadowColor = "rgb(128, 128, 128)";
+  ctx.shadowOffsetX = 5;
+  ctx.shadowOffsetY = 5;
+  ctx.fillText(stra, (width / 2) - (ctx.measureText(stra).width / 2), height / 2);
+  ctx.fillText(strb, (width / 2) - (ctx.measureText(strb).width / 2), (height / 2) + fSize);
+  ctx.shadowOffsetX = ctx.shadowOffsetY = 0;
+};
+
 function drawPlayer(entity) {
   let texture = entity.texture;
   let width = entity.width;
@@ -99,16 +115,19 @@ function drawPlayer(entity) {
   ctx.globalAlpha = 1.0;
 };
 
-function drawBlock(entity, index) {
-  let texture = entity.texture;
+function drawBlock(entity, index, color) {
   let width = entity.width;
   let height = entity.height;
   let x = cx + (entity.x) + Math.cos(((index * 1) + timer) / 1.5);
   let y = cy + (entity.y) + Math.sin(((index * 1) + timer) / 1.5);
   let factor = activeSatanMode() ? 0.015 : 1.5;
   ctx.globalAlpha = entity.opacity / 2;
-  ctx.fillStyle = `rgb(${blockColor[0]},${blockColor[1]},${blockColor[2]})`;
+  ctx.fillStyle = color || `rgb(${blockColor[0]},${blockColor[1]},${blockColor[2]})`;
   if (entity.reward) ctx.fillStyle = `yellow`;
+  else if (entity.flag) {
+    ctx.fillStyle = "#c8ffb1";
+    ctx.globalAlpha = 0.65;
+  }
   else if (entity.satan) {
     ctx.fillStyle = `red`;
     ctx.globalAlpha = entity.opacity;
@@ -131,7 +150,7 @@ function drawEntities() {
   for (let ii = 0; ii < entities.length; ++ii) {
     let entity = entities[ii];
     if (entity instanceof Player) drawPlayer(entity);
-    else if (entity instanceof Block) drawBlock(entity, ii);
+    else if (entity instanceof Block) drawBlock(entity, ii, null);
   };
 };
 
@@ -156,6 +175,17 @@ function drawParticles() {
 };
 
 function drawDeathRow() {
+  drawBlock(
+    {
+      x: -cx + 0,
+      y: -cy + (cy + maxBlockY),
+      width: width, height: 512,
+      opacity: 0.5
+    },
+    0,
+    "red"
+  );
+  return;
   ctx.fillStyle = `rgb(${blockColor[0]},${blockColor[1]},${blockColor[2]})`;
   ctx.globalAlpha = 0.25;
   ctx.fillRect(
@@ -167,6 +197,17 @@ function drawDeathRow() {
 
 function drawDeathColumn() {
   if (!player) return;
+  drawBlock(
+    {
+      x: -cx,
+      y: -cy,
+      width: cx + dcx, height: cy + maxBlockY,
+      opacity: 0.5
+    },
+    0,
+    "red"
+  );
+  return;
   ctx.fillStyle = `rgb(${blockColor[0]},${blockColor[1]},${blockColor[2]})`;
   ctx.globalAlpha = 0.25;
   ctx.fillRect(
@@ -174,6 +215,26 @@ function drawDeathColumn() {
     dcx, cy + maxBlockY
   );
   ctx.globalAlpha = 1.0;
+};
+
+let ex = 0; let ey = 0;
+let tx = 0; let ty = 0;
+function drawEndFlag() {
+  tx = wBlockIndex * 32;
+  ty = hBlockIndex * 32 - 96;
+  ex += (tx - ex) * 0.1;
+  ey += (ty - ey) * 0.1;
+  drawBlock(
+    {
+      flag: true,
+      x: ex,
+      y: ey,
+      width: 32, height: 32 * 4,
+      opacity: 0.75
+    },
+    wBlockIndex,
+    null
+  );
 };
 
 function clear() {
@@ -192,9 +253,13 @@ function draw() {
   clear();
   drawDeathRow();
   drawDeathColumn();
+  drawEndFlag();
   drawEntities();
   drawParticles();
-  if (player.dead) {
+  if (player.won) {
+    drawWinScreen();
+  }
+  else if (player.dead) {
     drawDeathScreen();
   }
   drawStats();

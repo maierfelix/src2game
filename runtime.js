@@ -63,6 +63,29 @@ setInterval(function() {
   }
 }, 50);
 
+function addBaseBlocks() {
+  addBlock(new Block(
+    (wBlockIndex++) * 32,
+    (hBlockIndex + 1) * 32,
+    32, 32
+  ));
+  addBlock(new Block(
+    (wBlockIndex++) * 32,
+    (hBlockIndex + 1) * 32,
+    32, 32
+  ));
+  addBlock(new Block(
+    (wBlockIndex++) * 32,
+    (hBlockIndex + 1) * 32,
+    32, 32
+  ));
+  addBlock(new Block(
+    (wBlockIndex++) * 32,
+    (hBlockIndex + 1) * 32,
+    32, 32
+  ));
+};
+
 function reset() {
   tasks = [];
   blocks = [];
@@ -82,16 +105,18 @@ function reset() {
   cx = width / 2;
   cy = height / 2;
   player = null;
+  ex = tx = 32 * 8;
   hBlockIndex = 0;
   wBlockIndex = 0;
   maxBlockY = minBlockY = 0;
   wdir = 1;
   hdir = -1;
-  dcx = 0;
-  dcvx = 0.00075;
+  dcx = -(width * 0.5) + 32;
+  dcvx = 0.075;
   createPlayer();
   stage = new Iroh.Stage(input.value);
   attachListeners(stage);
+  addBaseBlocks();
   // run script
   try {
     eval(stage.script);

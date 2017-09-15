@@ -2,6 +2,7 @@ class Player extends Entity {
   constructor() {
     super(...arguments);
     this._score = 0;
+    this.won = false;
     this.dead = false;
     this.canJump = true;
   }
