@@ -65,7 +65,8 @@ function updatePlayers() {
     let entity = players[ii];
     if (entity.dead) continue;
     // gravity
-    if (isBlockedAt(entity.vx, 0, entity)) entity.vx = 0;
+
+    if (isBlockedAt(entity.vx, -0.45, entity)) entity.vx = 0;
     if (isBlockedAt(0, entity.vy, entity)) entity.vy += 0.1;
     if (!isBlockedAt(0, entity.vy, entity)) entity.vy += 0.1;
     else entity.vy = -entity.vy * 0.65;
