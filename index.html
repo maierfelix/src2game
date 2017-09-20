@@ -4,10 +4,7 @@
 <a class="github-fork-ribbon left-bottom fixed" href="//github.com/maierfelix/sauce-jump" title="Fork me on GitHub">Fork me on GitHub</a>
 <textarea id="input">
 function factorial(n) {
-  n = n | 0;
-  if (n === 0) {
-    return n;
-  }
+  if (n === 0) return n;
   return n * factorial(n - 1);
 };
 for (let ii = 0; ii < 5; ++ii) {
