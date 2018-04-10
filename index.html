@@ -7,9 +7,10 @@ function factorial(n) {
   if (n === 0) return n;
   return n * factorial(n - 1);
 };
-factorial(1);
-factorial(4);
-factorial(9);
+let ii = 0;
+setInterval(function() {
+  factorial(ii++);
+}, 1e3);
 </textarea>
 <canvas id="canvas"></canvas>
 
